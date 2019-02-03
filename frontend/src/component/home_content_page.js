@@ -1,7 +1,21 @@
 import React from 'react';
 import { Row, Col, Input, Button, DatePicker, Icon} from 'antd';
 import './home_content_page.less';
+import { SEARCH_DATE_CHANGE } from '../reducer/searchreducer';
+import {connect} from 'react-redux';
+import moment from 'moment';
+import { SEARCH_CLICK } from '../epic/searchEpic';
+
 class HomeContentPage extends React.PureComponent {
+    constructor(props){
+        super(props);
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick() {
+        const textContent = document.getElementById('input-field').innerText;
+        this.props.search(textContent);
+    }
     render() {
         return (
             <React.Fragment>
@@ -12,13 +26,14 @@ class HomeContentPage extends React.PureComponent {
                     <Row className='search-row'>
                         <Col span={2} />
                         <Col span={11} className='search-input-col'>
-                            <Input size='large' placeholder='Place of the advertisement'/>
+                            <Input size='large' placeholder='Place of the advertisement' id={'input-field'}/>
                         </Col>
                         <Col span={8}>
-                            <DatePicker.RangePicker size='large' placeholder={['Start date', 'End date']}/>
+                            <DatePicker.RangePicker size='large' defaultValue={this.props.previousDate} 
+                            placeholder={['Start date', 'End date']} onChange={this.props.changeDate}/>
                         </Col>
                         <Col span={3} className='search-extra-col'>
-                            <Button className='search-btn' type='primary' size='large'>
+                            <Button className='search-btn' type='primary' size='large' disabled={!this.props.searchable} onClick={this.handleClick}>
                                 <span>Search</span>
                             </Button> 
                         </Col>
@@ -104,4 +119,36 @@ class HomeContentPage extends React.PureComponent {
     }
 }
 
-export default HomeContentPage;
+const mapStateToProps = (state, ownProps) => {
+    const {login, search} = state;
+    console.log(login);
+    console.log(search);
+    let props = {};
+
+    // validate if we can search
+    if(login.isLogedIn && search.date.length === 2 && search.date[1].length > 0){
+        Object.assign(props, {searchable: true});
+    } else {
+        Object.assign(props, {searchable: false});
+    }
+
+    // to restore previously selected date
+    if(search.date.length === 2 && search.date[1].length > 0){
+        Object.assign(props, {previousDate: search.date.map(date => moment(date))});
+    }
+    return props;
+};
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return ({
+        changeDate: (moments, strings) => {
+            dispatch({type: SEARCH_DATE_CHANGE, payload: strings});
+        },
+        search: (keyword) => {
+            dispatch({type: SEARCH_CLICK, payload: keyword})
+        }
+    });
+};
+
+const connectedComponent = connect(mapStateToProps,mapDispatchToProps)(HomeContentPage);
+
+export default connectedComponent;
