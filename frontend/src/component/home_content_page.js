@@ -5,6 +5,7 @@ import { SEARCH_DATE_CHANGE } from '../reducer/searchreducer';
 import {connect} from 'react-redux';
 import moment from 'moment';
 import { SEARCH_CLICK } from '../epic/searchEpic';
+import { withRouter } from 'react-router-dom';
 
 class HomeContentPage extends React.PureComponent {
     constructor(props){
@@ -15,6 +16,7 @@ class HomeContentPage extends React.PureComponent {
     handleClick() {
         const textContent = document.getElementById('input-field').innerText;
         this.props.search(textContent);
+        this.props.history.push('/onlineads');
     }
     render() {
         return (
@@ -150,5 +152,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 };
 
 const connectedComponent = connect(mapStateToProps,mapDispatchToProps)(HomeContentPage);
+const routedComponent = withRouter(connectedComponent);
 
-export default connectedComponent;
+export default routedComponent;
