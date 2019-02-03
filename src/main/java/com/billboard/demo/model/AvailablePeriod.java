@@ -1,5 +1,6 @@
 package com.billboard.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -22,6 +23,7 @@ public class AvailablePeriod {
 
     @ManyToOne
     @JoinColumn(name = "ad_source")
+    @JsonIgnore
     private AdSource adSource;
 
 }

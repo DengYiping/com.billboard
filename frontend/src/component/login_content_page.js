@@ -12,7 +12,7 @@ class LoginContentPage extends React.Component {
             if (!err) {
                 // TODO
                 const {userName, password} = values;
-                console.log('Received values of form: ', values);
+                // console.log('Received values of form: ', values);
                 this.props.dispatchLogin(userName, password);
 
             }

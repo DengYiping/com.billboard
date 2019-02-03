@@ -1,12 +1,12 @@
 import { ofType } from 'redux-observable';
-import { LOG_IN, IS_LOG_IN } from '../reducer/loginlogoutreducer';
-import { map, flatMap, tap } from 'rxjs/operators';
+import { LOG_IN, IS_LOG_IN, IS_LOG_OUT } from '../reducer/loginlogoutreducer';
+import { map, switchMap, tap, catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 function loginEpic(action$, state$){
     return action$.pipe(
         ofType(LOG_IN),
-        tap(console.log),
-        flatMap(({payload}) => 
+        switchMap(({payload}) => 
             fetch('/json_login', {
                 headers: {'Content-type': 'application/json'},
                 method: 'POST',
@@ -14,8 +14,21 @@ function loginEpic(action$, state$){
                 credentials: 'include'
             })
         ),
-        tap(console.log),
-        map(()=> ({type: IS_LOG_IN}))
+        catchError(err => {
+            console.log('cannot connect to login server');
+            return of({type: IS_LOG_OUT});
+        }),
+        switchMap(resp => resp.json()),
+        // tap(console.log),
+        map(json => {
+            if(json === 'OK!'){
+                return ({type: IS_LOG_IN});
+            } else {
+                // TODO: should have some logic for login failure
+                alert('login is not correct!');
+                return ({type: IS_LOG_OUT})
+            }
+        })
     );
 }
 

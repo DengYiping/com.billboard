@@ -18,7 +18,7 @@ public class AdSource {
     private Owner owner;
 
     @Column
-    @OneToMany(mappedBy = "adSource")
+    @OneToMany(mappedBy = "adSource", cascade = CascadeType.ALL)
     private List<AvailablePeriod> availabilities;
 
     @Column
