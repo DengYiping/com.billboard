@@ -5,7 +5,7 @@ import { map, switchMap} from 'rxjs/operators';
 function logoutEpic(action$, state$){
     return action$.pipe(
         ofType(LOG_OUT),
-        switchMap(action => fetch('/logout', {credentials: 'include'})),
+        switchMap(action => fetch('/logout', {credentials: 'include', redirect: 'manual'})),
         map(()=> ({type: IS_LOG_OUT}))
     )
 }
