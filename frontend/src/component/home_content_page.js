@@ -1,6 +1,7 @@
 import React from 'react';
 import { Row, Col, Input, Button, DatePicker, Icon} from 'antd';
 import './home_content_page.less';
+
 class HomeContentPage extends React.PureComponent {
     render() {
         return (
@@ -20,7 +21,7 @@ class HomeContentPage extends React.PureComponent {
                         <Col span={3} className='search-extra-col'>
                             <Button className='search-btn' type='primary' size='large'>
                                 <span>Search</span>
-                            </Button> 
+                            </Button>
                         </Col>
                     </Row>
                 </Row>
@@ -95,7 +96,7 @@ class HomeContentPage extends React.PureComponent {
                             </Col>
                         </Row>
                     </Col>
- 
+
                 </Row>
 
                 </Row>

@@ -1,8 +1,11 @@
 import React from 'react';
+import Product from './productContainer'
 
 class OnlineAdContentPage extends React.PureComponent {
     render() {
-        return (<div>Online Ads Page</div>);
+        return (
+          <Product />
+      );
     }
 }
 
