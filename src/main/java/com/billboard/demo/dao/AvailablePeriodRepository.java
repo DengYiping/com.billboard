@@ -14,5 +14,5 @@ import java.util.List;
 
 @RepositoryRestResource
 public interface AvailablePeriodRepository extends PagingAndSortingRepository<AvailablePeriod, Long> {
-    List<AvailablePeriod> findAvailablePeriodByStartDateAfterAndEndDateBefore(Date startDate, Date endDate);
+    List<AvailablePeriod> findAvailablePeriodByStartDateLessThanEqualAndEndDateGreaterThanEqual(Date startDate, Date endDate);
 }

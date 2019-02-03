@@ -24,7 +24,7 @@ public class SearchController {
 
     @RequestMapping(value = "/api/search", method = RequestMethod.POST)
     public List<SearchResultDto> searchAll(@RequestBody SearchDto dto) {
-        List<AvailablePeriod> availablePeriods = availablityRepo.findAvailablePeriodByStartDateAfterAndEndDateBefore(
+        List<AvailablePeriod> availablePeriods = availablityRepo.findAvailablePeriodByStartDateLessThanEqualAndEndDateGreaterThanEqual(
                 dto.getAvailablePeriod().getStartDate(),
                 dto.getAvailablePeriod().getEndDate()
         );
