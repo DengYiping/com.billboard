@@ -18,6 +18,7 @@ function fetchSearchResult([keyword, dates]) {
 function searchEpic(action$, state$) {
     return action$.pipe(
         ofType(SEARCH_CLICK),
+        tap(console.log),
         map(action => action.payload),
         withLatestFrom(state$),
         map(([keyword, state]) => [keyword, state.search.date]),
