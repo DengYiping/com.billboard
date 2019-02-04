@@ -1,7 +1,8 @@
 import { ofType } from 'redux-observable';
 import { LOG_IN, IS_LOG_IN, IS_LOG_OUT } from '../reducer/loginlogoutreducer';
-import { map, switchMap, tap, catchError } from 'rxjs/operators';
+import { flatMap, switchMap, catchError} from 'rxjs/operators';
 import { of } from 'rxjs';
+import { FETCH_LOGIN_DETAIL } from './loginDetailEpic';
 
 function loginEpic(action$, state$){
     return action$.pipe(
@@ -20,13 +21,14 @@ function loginEpic(action$, state$){
         }),
         switchMap(resp => resp.json()),
         // tap(console.log),
-        map(json => {
+        // already loged in, get login detail
+        flatMap(json => {
             if(json === 'OK!'){
-                return ({type: IS_LOG_IN});
+                return of({type: IS_LOG_IN}, {type: FETCH_LOGIN_DETAIL});
             } else {
                 // TODO: should have some logic for login failure
                 alert('login is not correct!');
-                return ({type: IS_LOG_OUT})
+                return of({type: IS_LOG_OUT});
             }
         })
     );
