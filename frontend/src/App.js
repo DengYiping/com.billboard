@@ -12,6 +12,7 @@ import OnlineAdContentPage from './component/onlinead_content_page';
 import EstablishmentContentPage from './component/establishment_content_page';
 import configureStore from './util/configureStore';
 import WrappedRegistrationForm from './component/registration'
+import WrappedadvertisementRegister from './component/advertismentRegister'
 
 const store = configureStore();
 class App extends Component {
@@ -20,9 +21,9 @@ class App extends Component {
       // load the store
       <Provider store={store}>
         <div className="App">
-          <Layout style={{height:'100vh'}}>
+          <Layout style={{ height: '100vh' }}>
             <NaviBar />
-            <Layout.Content style={{height: '100%', overflowY:'scroll'}}>
+            <Layout.Content style={{ height: '100%', overflowY: 'scroll' }}>
               <Switch>
                 {/* different possible pages */}
                 <Route exact path='/' component={HomeContentPage} />
@@ -30,6 +31,7 @@ class App extends Component {
                 <Route exact path='/establishmentads' component={EstablishmentContentPage} />
                 <Route exact path='/login' component={LoginContentPage} />
                 <Route exact path='/registration' component={WrappedRegistrationForm} />
+                <Route exact path='/advertisementRegister' component={WrappedadvertisementRegister} />
               </Switch>
             </Layout.Content>
             <Footer />
