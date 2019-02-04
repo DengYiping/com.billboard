@@ -11,7 +11,7 @@ import HomeContentPage from './component/home_content_page';
 import OnlineAdContentPage from './component/onlinead_content_page';
 import EstablishmentContentPage from './component/establishment_content_page';
 import configureStore from './util/configureStore';
-import WrappedRegistrationForm from './component/registration'
+import RegistrationPage from './component/registrationPage'
 
 const store = configureStore();
 class App extends Component {
@@ -29,7 +29,7 @@ class App extends Component {
                 <Route exact path='/onlineads' component={OnlineAdContentPage} />
                 <Route exact path='/establishmentads' component={EstablishmentContentPage} />
                 <Route exact path='/login' component={LoginContentPage} />
-                <Route exact path='/registration' component={WrappedRegistrationForm} />
+                <Route exact path='/registration' component={RegistrationPage} />
               </Switch>
             </Layout.Content>
             <Footer />
