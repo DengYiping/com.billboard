@@ -33,6 +33,15 @@ class NaviBar extends React.Component {
                     <Menu.Item key='/establishmentads'>
                         <NavLink to='/establishmentads'>Establishment Ads</NavLink>
                     </Menu.Item>
+                    {
+                        (this.props.isLogedIn && this.props.loginDetail && this.props.loginDetail.owner) ?
+                            (
+                        <Menu.Item key='/advertisementRegister'>
+                            <NavLink to='/advertisementRegister'>Register Ads</NavLink>
+                        </Menu.Item>
+                        ) :
+                            (null)
+                    }
                 </Menu>
             </Layout.Header>
         );
@@ -40,7 +49,7 @@ class NaviBar extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    return { isLogedIn: state.login.isLogedIn };
+    return { isLogedIn: state.login.isLogedIn, loginDetail: state.login.detail };
 }
 
 const mapDispatchToProps = dispatch => {

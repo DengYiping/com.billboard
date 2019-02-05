@@ -2,6 +2,9 @@ import {
     Form, Input, Button, DatePicker,
 } from 'antd';
 import React from 'react';
+import { ADD_AD } from '../epic/addAdEpic';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 const { RangePicker } = DatePicker;
 
 class TimeRelatedForm extends React.Component {
@@ -14,12 +17,21 @@ class TimeRelatedForm extends React.Component {
             }
 
             // Should format date value before submit.
-            const rangeValue = fieldsValue['range-picker'];
-            const values = {
-                ...fieldsValue,
-                'range-picker': [rangeValue[0].format('YYYY-MM-DD'), rangeValue[1].format('YYYY-MM-DD')]
+            const rangeValue = fieldsValue['rangePicker'];
+            const startDate = rangeValue[0].format('YYYY-MM-DD');
+            const endDate = rangeValue[0].format('YYYY-MM-DD');
+            const availablities = [{startDate, endDate}];
+            const { address, price, name } = fieldsValue;
+            
+            // assemble javascript object
+            const obj = {
+                name,
+                address,
+                availablities,
+                dailyPrice: parseFloat(price)
             };
-            console.log('Received values of form: ', values);
+            this.props.sendForm(obj);
+            this.props.history.push('/');
         });
     }
 
@@ -49,7 +61,7 @@ class TimeRelatedForm extends React.Component {
               </span>
                     )}
                 >
-                    {getFieldDecorator('nameOfListing', {
+                    {getFieldDecorator('name', {
                         rules: [{ required: true, message: 'Please name your listing!', whitespace: true }],
                     })(
                         <Input style={{ width: "75%" }} />
@@ -76,8 +88,8 @@ class TimeRelatedForm extends React.Component {
               </span>
                     )}
                 >
-                    {getFieldDecorator('Price', {
-                        rules: [{ required: true, message: 'Please name your price per day!', whitespace: true }],
+                    {getFieldDecorator('price', {
+                        rules: [{ required: true, message: 'Please name your price per day!', whitespace: false }],
                     })(
                         <Input style={{ width: "75%" }} />
                     )}
@@ -86,7 +98,7 @@ class TimeRelatedForm extends React.Component {
                     {...formItemLayout}
                     label="RangePicker"
                 >
-                    {getFieldDecorator('range-picker', rangeConfig)(
+                    {getFieldDecorator('rangePicker', rangeConfig)(
                         <RangePicker />
                     )}
                 </Form.Item>
@@ -98,5 +110,17 @@ class TimeRelatedForm extends React.Component {
     }
 }
 
+
+const mapStateToProps = (state, ownProps) => {
+    return {};
+};
+
+const mapDispatchtoProps = (dispatch, ownProps) => {
+    return {
+        sendForm: (formData) => dispatch({type: ADD_AD, payload: formData})
+    };
+}
+
+
 const WrappedTimeRelatedForm = Form.create({ name: 'time_related_controls' })(TimeRelatedForm);
-export default WrappedTimeRelatedForm;
+export default withRouter(connect(mapStateToProps, mapDispatchtoProps)(WrappedTimeRelatedForm));
