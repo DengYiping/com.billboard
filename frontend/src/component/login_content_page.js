@@ -54,7 +54,7 @@ class LoginContentPage extends React.Component {
                                 <Button type="primary" htmlType="submit" className="login-form-button">
                                     Log in
                             </Button>
-                                Or <Link to="/">register now!</Link>
+                                Or <Link to="/registration">register now!</Link>
                             </Form.Item>
                         </Form>
                     </Col>
