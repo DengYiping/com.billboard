@@ -19,7 +19,7 @@ class TimeRelatedForm extends React.Component {
             // Should format date value before submit.
             const rangeValue = fieldsValue['rangePicker'];
             const startDate = rangeValue[0].format('YYYY-MM-DD');
-            const endDate = rangeValue[0].format('YYYY-MM-DD');
+            const endDate = rangeValue[1].format('YYYY-MM-DD');
             const availablities = [{startDate, endDate}];
             const { address, price, name } = fieldsValue;
             
