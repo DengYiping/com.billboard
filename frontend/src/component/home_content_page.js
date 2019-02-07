@@ -23,9 +23,9 @@ class HomeContentPage extends React.PureComponent {
             <React.Fragment>
                 <Row className='greeting-search-section'>
                     {
-                        this.props.loginDetail ? 
-                        <Row className='greeting-row'>Welcome, <span className='greeting-highlight-part'>{this.props.loginDetail.username}</span></Row>
-                        : <Row className='greeting-row'>Welcome to <span className='greeting-highlight-part'>Billboard</span></Row>
+                        this.props.loginDetail ?
+                            <Row className='greeting-row'>Welcome, <span className='greeting-highlight-part'>{this.props.loginDetail.username}</span></Row>
+                            : <Row className='greeting-row'>Welcome to <span className='greeting-highlight-part'>ADNET</span></Row>
                     }
                     <Row className='search-row'>
                         <Col span={2} />
